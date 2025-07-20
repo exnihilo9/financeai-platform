@@ -93,4 +93,4 @@ temp/
 *.sw?
 
 # Package manager lock files (when using npm, you might want to include package-lock.json)
-package-lock.json
+# package-lock.json - now included for dependency management
