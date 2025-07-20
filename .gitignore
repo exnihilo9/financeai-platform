@@ -92,5 +92,6 @@ temp/
 *.sln
 *.sw?
 
-# Package manager lock files (when using npm, you might want to include package-lock.json)
-package-lock.json
+# Package manager lock files - keeping both for compatibility
+# pnpm-lock.yaml (for pnpm users)
+# package-lock.json (for npm users)
