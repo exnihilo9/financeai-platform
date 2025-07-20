@@ -213,79 +213,90 @@ const FinanceAI = () => {
   const renderDashboard = () => (
     <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground mb-2">
-            Welcome back to your financial command center
+      <div className="flex items-center justify-between mb-8">
+        <div className="space-y-2">
+          <h1 className="text-5xl font-bold text-foreground leading-tight">
+            Welcome back to your 
+            <span className="text-gradient block">financial command center</span>
           </h1>
-          <p className="text-muted-foreground text-lg">
-            Manage your wealth with AI-powered precision
+          <p className="text-muted-foreground text-xl leading-relaxed">
+            Manage your wealth with AI-powered precision and real-time insights
           </p>
         </div>
-        <div className="text-right">
-          <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-1">
+        <div className="text-right space-y-2">
+          <div className="text-5xl font-bold text-green-600 dark:text-green-400 leading-none">
             $284,567.89
           </div>
-          <div className="text-sm text-green-500 flex items-center gap-2 justify-end">
-            <TrendingUp className="w-4 h-4" />
-            +4.56% today
+          <div className="text-base text-green-500 flex items-center gap-3 justify-end">
+            <TrendingUp className="w-5 h-5" />
+            <span className="font-semibold">+4.56% today</span>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            Portfolio Performance
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">Quick Actions</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-foreground">Quick Actions</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {[
-            { name: 'Banking', icon: CreditCard, section: 'banking', color: 'text-blue-500' },
-            { name: 'Exchange', icon: ArrowUpDown, section: 'exchange', color: 'text-purple-500' },
-            { name: 'AI Predictions', icon: Brain, section: 'ai-predictions', color: 'text-emerald-500' },
-            { name: 'Portfolio', icon: PieChart, section: 'portfolio', color: 'text-orange-500' },
-            { name: 'Market Data', icon: BarChart3, section: 'market-data', color: 'text-red-500' },
-            { name: 'AI Features', icon: Zap, section: 'ai-features', color: 'text-cyan-500' }
+            { name: 'Banking', icon: CreditCard, section: 'banking', color: 'text-blue-500', bgColor: 'bg-blue-50' },
+            { name: 'Exchange', icon: ArrowUpDown, section: 'exchange', color: 'text-purple-500', bgColor: 'bg-purple-50' },
+            { name: 'AI Predictions', icon: Brain, section: 'ai-predictions', color: 'text-emerald-500', bgColor: 'bg-emerald-50' },
+            { name: 'Portfolio', icon: PieChart, section: 'portfolio', color: 'text-orange-500', bgColor: 'bg-orange-50' },
+            { name: 'Market Data', icon: BarChart3, section: 'market-data', color: 'text-red-500', bgColor: 'bg-red-50' },
+            { name: 'AI Features', icon: Zap, section: 'ai-features', color: 'text-cyan-500', bgColor: 'bg-cyan-50' }
           ].map((action) => (
             <button
               key={action.section}
               onClick={() => setActiveSection(action.section)}
-              className="glass-card p-4 text-center hover:scale-105 transition-all duration-300"
+              className="glass-card p-6 text-center hover:scale-105 transition-all duration-500 group"
             >
-              <action.icon className={`w-8 h-8 ${action.color} mx-auto mb-2`} />
-              <h3 className="font-semibold text-foreground text-sm">{action.name}</h3>
+              <div className={`w-12 h-12 ${action.bgColor} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <action.icon className={`w-6 h-6 ${action.color}`} />
+              </div>
+              <h3 className="font-semibold text-foreground text-base">{action.name}</h3>
             </button>
           ))}
         </div>
       </div>
 
       {/* Dashboard Tools */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">Dashboard Tools</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-foreground">Dashboard Tools</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { name: 'Portfolio Optimizer Pro', icon: Target, accuracy: '98.4%', users: '67K+', color: 'text-blue-500' },
-            { name: 'Advanced Risk Analyzer', icon: Shield, accuracy: '97.1%', users: '89K+', color: 'text-green-500' },
-            { name: 'AI Market Predictor', icon: Brain, accuracy: '95.7%', users: '123K+', color: 'text-purple-500' },
-            { name: 'Performance Analytics', icon: Activity, accuracy: '96.8%', users: '45K+', color: 'text-orange-500' },
-            { name: 'Smart Rebalancer', icon: Zap, accuracy: '95.9%', users: '78K+', color: 'text-pink-500' },
-            { name: 'AI Market Scanner', icon: Rocket, accuracy: '98.7%', users: '156K+', color: 'text-indigo-500' }
+            { name: 'Portfolio Optimizer Pro', icon: Target, accuracy: '98.4%', users: '67K+', color: 'text-blue-500', description: 'Advanced portfolio optimization with AI-driven rebalancing strategies' },
+            { name: 'Advanced Risk Analyzer', icon: Shield, accuracy: '97.1%', users: '89K+', color: 'text-green-500', description: 'Real-time risk assessment and portfolio protection algorithms' },
+            { name: 'AI Market Predictor', icon: Brain, accuracy: '95.7%', users: '123K+', color: 'text-purple-500', description: 'Machine learning predictions for market trends and opportunities' },
+            { name: 'Performance Analytics', icon: Activity, accuracy: '96.8%', users: '45K+', color: 'text-orange-500', description: 'Comprehensive performance tracking and detailed analytics dashboard' },
+            { name: 'Smart Rebalancer', icon: Zap, accuracy: '95.9%', users: '78K+', color: 'text-pink-500', description: 'Automated portfolio rebalancing with tax-efficient strategies' },
+            { name: 'AI Market Scanner', icon: Rocket, accuracy: '98.7%', users: '156K+', color: 'text-indigo-500', description: 'Real-time market scanning for emerging opportunities and threats' }
           ].map((tool, index) => (
-            <div key={index} className="glass-card p-6">
-              <div className="flex items-center justify-between mb-4">
-                <tool.icon className={`w-8 h-8 ${tool.color}`} />
+            <div key={index} className="glass-card p-8 group hover-lift">
+              <div className="flex items-center justify-between mb-6">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-white/20 to-white/5 group-hover:scale-110 transition-transform duration-300">
+                  <tool.icon className={`w-8 h-8 ${tool.color}`} />
+                </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-primary">{tool.accuracy}</div>
-                  <div className="text-xs text-muted-foreground">Accuracy</div>
+                  <div className="text-3xl font-bold text-primary leading-none">{tool.accuracy}</div>
+                  <div className="text-xs text-muted-foreground font-medium">Accuracy Rate</div>
                 </div>
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">{tool.name}</h3>
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-xs text-muted-foreground">Active</span>
+              <h3 className="text-xl font-bold text-foreground mb-3">{tool.name}</h3>
+              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">{tool.description}</p>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-green-500 rounded-full pulse-animation"></div>
+                  <span className="text-sm text-muted-foreground font-medium">Active</span>
                 </div>
-                <div className="text-xs text-muted-foreground">{tool.users} users</div>
+                <div className="text-sm text-muted-foreground font-semibold">{tool.users} users</div>
               </div>
-              <button className="btn-primary w-full">Launch Tool</button>
+              <button className="btn-primary w-full group-hover:scale-105 transition-transform duration-300">
+                Launch Tool
+              </button>
             </div>
           ))}
         </div>
