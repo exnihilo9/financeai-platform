@@ -11,8 +11,17 @@ import {
   Shield,
   Zap,
   Target,
-  AlertTriangle
+  AlertTriangle,
+  Layout,
+  Grid3X3,
+  Maximize2
 } from 'lucide-react';
+
+// Import new widgets
+import PriceChart from '../widgets/PriceChart';
+import TradeHistory from '../widgets/TradeHistory';
+import PortfolioBalance from '../widgets/PortfolioBalance';
+import QuickCalculator from '../widgets/QuickCalculator';
 
 const TRADING_PAIRS = [
   { 
@@ -114,6 +123,7 @@ const ExchangeSection = () => {
   });
   const [activeTab, setActiveTab] = useState('spot');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [layoutMode, setLayoutMode] = useState('advanced'); // simple, advanced
 
   const selectedPairData = TRADING_PAIRS.find(pair => pair.pair === selectedPair);
 
@@ -451,6 +461,42 @@ const ExchangeSection = () => {
 
   return (
     <div className="space-y-8">
+      {/* Enhanced Header with Layout Toggle */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground mb-2">
+            Crypto Exchange
+          </h1>
+          <p className="text-muted-foreground">
+            Professional trading platform with advanced tools and analytics
+          </p>
+        </div>
+        
+        <div className="flex items-center space-x-3">
+          {/* Layout Mode Toggle */}
+          <div className="flex bg-muted rounded-lg p-1">
+            {[
+              { id: 'simple', icon: Layout, label: 'Simple' },
+              { id: 'advanced', icon: Grid3X3, label: 'Advanced' }
+            ].map(({ id, icon: Icon, label }) => (
+              <button
+                key={id}
+                onClick={() => setLayoutMode(id)}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-md transition-all ${
+                  layoutMode === id 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+                title={label}
+              >
+                <Icon className="w-4 h-4" />
+                <span className="text-sm font-medium">{label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Market Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
@@ -478,23 +524,73 @@ const ExchangeSection = () => {
       </div>
 
       {/* Main Trading Interface */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Trading Pairs */}
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold text-foreground">Trading Pairs</h3>
-          <div className="space-y-3">
-            {TRADING_PAIRS.map((pair, index) => (
-              <TradingPairCard key={pair.pair} pair={pair} index={index} />
-            ))}
+      {layoutMode === 'advanced' ? (
+        <div className="space-y-8">
+          {/* Price Chart Section */}
+          <PriceChart 
+            pair={selectedPair} 
+            basePrice={selectedPairData?.price || 43250}
+            className="col-span-full"
+          />
+
+          {/* Grid Layout for Advanced Tools */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+            {/* Trading Pairs */}
+            <div className="lg:col-span-1">
+              <h3 className="text-xl font-bold text-foreground mb-4">Trading Pairs</h3>
+              <div className="space-y-3 max-h-[600px] overflow-y-auto custom-scrollbar">
+                {TRADING_PAIRS.map((pair, index) => (
+                  <TradingPairCard key={pair.pair} pair={pair} index={index} />
+                ))}
+              </div>
+            </div>
+
+            {/* Order Book */}
+            <div className="lg:col-span-1">
+              <OrderBook />
+            </div>
+
+            {/* Trading Form */}
+            <div className="lg:col-span-1">
+              <TradingForm />
+            </div>
+
+            {/* Portfolio Balance */}
+            <div className="lg:col-span-1">
+              <PortfolioBalance />
+            </div>
+
+            {/* Trade History */}
+            <div className="lg:col-span-2">
+              <TradeHistory />
+            </div>
+
+            {/* Quick Calculator */}
+            <div className="lg:col-span-2">
+              <QuickCalculator />
+            </div>
           </div>
         </div>
+      ) : (
+        /* Simple Layout */
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Trading Pairs */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold text-foreground">Trading Pairs</h3>
+            <div className="space-y-3">
+              {TRADING_PAIRS.map((pair, index) => (
+                <TradingPairCard key={pair.pair} pair={pair} index={index} />
+              ))}
+            </div>
+          </div>
 
-        {/* Order Book */}
-        <OrderBook />
+          {/* Order Book */}
+          <OrderBook />
 
-        {/* Trading Form */}
-        <TradingForm />
-      </div>
+          {/* Trading Form */}
+          <TradingForm />
+        </div>
+      )}
     </div>
   );
 };
